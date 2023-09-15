@@ -1,0 +1,18 @@
+{
+  "name": "upanupstudios/envoke-php-client",
+  "description": "Envoke API client for PHP",
+  "keywords": ["envoke", "api"],
+  "licencse": "MIT",
+  "authors": [
+    {
+      "name": "Marco Maranao",
+      "email": "marcom@upanup.com"
+    }
+  ],
+  "require": {
+      "guzzlehttp/guzzle": "^6.0"
+  },
+  "autoload": {
+      "psr-4": { "Upanupstudios\\Envoke\\Php\\Client\\": "src/" }
+  }
+}
