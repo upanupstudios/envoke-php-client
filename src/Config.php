@@ -4,18 +4,39 @@ namespace Upanupstudios\Envoke\Php\Client;
 
 final class Config
 {
-  private $apiToken;
+  /**
+   * The API ID.
+   *
+   * @var string
+   */
+  private $apiId;
 
-  public function __construct(string $apiToken)
+  /**
+   * The API Key.
+   *
+   * @var string
+   */
+  private $apiKey;
+
+  public function __construct(string $apiId, string $apiKey)
   {
-    $this->apiToken = $apiToken;
+    $this->apiId = $apiId;
+    $this->apiKey = $apiKey;
   }
 
   /**
-   * Get API token.
+   * Get API ID.
    */
-  public function getApiToken(): string
+  public function getApiId(): string
   {
-    return $this->apiToken;
+    return $this->apiId;
+  }
+
+  /**
+   * Get API Key.
+   */
+  public function getApiKey(): string
+  {
+    return $this->apiKey;
   }
 }
