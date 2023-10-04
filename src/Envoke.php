@@ -12,9 +12,21 @@ class Envoke
    *
    * @var string $api_url
    */
-  private $api_url = 'https://api.envoke.com';
+  private $api_url = 'https://e1.envoke.com';
 
+
+  /**
+   * The config class
+   *
+   * @var Config $api_url
+   */
   private $config;
+
+  /**
+   * The http client interface.
+   *
+   * @var ClientInterface $httpClient
+   */
   private $httpClient;
 
   public function __construct(Config $config, ClientInterface $httpClient)
@@ -36,11 +48,13 @@ class Envoke
   public function request(string $method, string $uri, array $options = [])
   {
     try {
+      $credentials = base64_encode($this->config->getApiId() . ':' . $this->config->getApiKey());
+
       $defaultOptions = [
         'headers' => [
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
-          'Authorization' => 'Bearer '.$this->config->getApiToken()
+          'Authorization' => 'Basic '.$credentials
         ]
       ];
 
@@ -56,6 +70,11 @@ class Envoke
       $body = $request->getBody();
       $response = $body->__toString();
 
+      if($uri == 'api/v4legacy/send/SendEmails') {
+        // API returning deprecation errors, remove them to get a proper response
+        $response = substr($response, strpos($response, '['));
+      }
+
       // Return as array
       $response = json_decode($response, TRUE);
     } catch (\JsonException $exeption) {
@@ -69,7 +88,7 @@ class Envoke
 
   public function ping()
   {
-    $response = $this->request('GET', 'ping');
+    $response = $this->request('GET', 'v1/contacts');
 
     return $response;
   }
@@ -83,12 +102,16 @@ class Envoke
   public function api(string $class)
   {
     switch ($class) {
-      case 'groups':
-        $api = new Groups($this);
+      case 'interests':
+        $api = new Interests($this);
         break;
 
-      case 'mailings':
-        $api = new Mailings($this);
+      case 'messages':
+        $api = new Messages($this);
+        break;
+
+      case 'contacts':
+        $api = new Contacts($this);
         break;
 
       default:

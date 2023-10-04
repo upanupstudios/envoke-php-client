@@ -2,13 +2,10 @@
 
 namespace Upanupstudios\Envoke\Php\Client;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
-
 abstract class AbstractApi
 {
   /**
-   * @var Envoke
+   * @var Envoke $client.
    */
   protected $client;
 

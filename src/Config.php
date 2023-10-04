@@ -7,14 +7,14 @@ final class Config
   /**
    * The API ID.
    *
-   * @var string
+   * @var string $apiId
    */
   private $apiId;
 
   /**
    * The API Key.
    *
-   * @var string
+   * @var string $apiKey
    */
   private $apiKey;
 
